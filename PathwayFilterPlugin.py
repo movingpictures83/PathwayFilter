@@ -3,6 +3,7 @@ import sys
 #from plugins.CSV2GML.CSV2GMLPlugin import *
 from CSV2GML.CSV2GMLPlugin import *
 
+import PyPluMA
 
 
 class PathwayFilterPlugin(CSV2GMLPlugin):
@@ -18,6 +19,9 @@ class PathwayFilterPlugin(CSV2GMLPlugin):
             self.myfile = entries[1]
          elif (entries[0] == 'pathwayfile'):
             self.mypathways = entries[1]
+      if len(PyPluMA.prefix()) != 0:
+             self.myfile = PyPluMA.prefix() + "/" + self.myfile
+             self.mypathways = PyPluMA.prefix() + "/" + self.mypathways
          # Ignore everything else
 
    def run(self):
@@ -33,7 +37,7 @@ class PathwayFilterPlugin(CSV2GMLPlugin):
       i = 0
       for line in filestuff:
          contents = line.split(',')
-	 self.ADJ.append([])
+         self.ADJ.append([])
          self.ADJ2.append([])
          for j in range(self.n):
             value = float(contents[j+1])
